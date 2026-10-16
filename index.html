@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Види дефіциту бюджету та методи управління | Доповідь</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #581c87;
+            --secondary: #6b21a8;
+            --accent: #d97706;
+            --bg-body: #faf5ff;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --border-color: #e9d5ff;
+            --shadow: 0 12px 40px -10px rgba(88, 28, 135, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* ФОНОВІ АНІМАЦІЇ */
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(217, 119, 6, 0.05) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, rgba(88, 28, 135, 0.06) 0%, transparent 45%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            background: rgba(217, 119, 6, 0.05);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: 0;
+            animation: floatOrb 14s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .glow-orb.orb-2 {
+            top: 50%;
+            left: 65%;
+            background: rgba(88, 28, 135, 0.06);
+            animation-duration: 18s;
+            animation-direction: alternate-reverse;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-60px) scale(1.2); }
+        }
+
+        /* АДАПТИВНЕ МЕНЮ НАВІГАЦІЇ */
+        nav {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(14px);
+            padding: 8px 12px;
+            border-radius: 100px;
+            z-index: 1000;
+            display: flex;
+            gap: 6px;
+            max-width: 94vw;
+            overflow-x: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        nav::-webkit-scrollbar { display: none; }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: clamp(9px, 1.8vw, 11px);
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 8px 14px;
+            border-radius: 100px;
+            transition: 0.3s;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: #ffffff;
+            background: var(--primary);
+        }
+
+        /* СЕКЦІЇ ТА КОНТЕЙНЕРИ */
+        section {
+            min-height: 100vh;
+            padding: 130px 20px 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content-box {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ЗАГОЛОВКИ */
+        h1 {
+            font-size: clamp(2.1rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        p {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            color: var(--text-main);
+            margin-bottom: 20px;
+            text-align: justify;
+            font-weight: 400;
+        }
+
+        .accent-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* КАРТКИ КОНТЕНТУ */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 44px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px -10px rgba(88, 28, 135, 0.12);
+        }
+
+        /* ІНФО-БАР */
+        .interactive-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            background: rgba(217, 119, 6, 0.06);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px var(--accent);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.5); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(217, 119, 6, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+        }
+
+        /* СІТКА БЛОКІВ */
+        .grid-blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .grid-blocks.two-cols {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .block-item {
+            background: #fdfcff;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            border-left: 3px solid var(--accent);
+            transition: 0.3s;
+        }
+
+        .block-item:hover {
+            background: #ffffff;
+            border-color: rgba(217, 119, 6, 0.35);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            transform: translateY(-2px);
+        }
+
+        .block-item h4 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .block-item p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            text-align: left;
+            color: var(--text-muted);
+        }
+
+        /* ФУТЕР */
+        footer {
+            padding: 35px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+
+        /* МОБІЛЬНА АДАПТАЦІЯ */
+        @media (max-width: 900px) {
+            .grid-blocks, .grid-blocks.two-cols { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 650px) {
+            .grid-blocks, .grid-blocks.two-cols { grid-template-columns: 1fr; }
+            .card { padding: 24px; border-radius: 18px; }
+            section { padding-top: 100px; padding-bottom: 40px; min-height: auto; }
+            nav { top: 12px; max-width: 96vw; padding: 6px 8px; }
+            nav a { padding: 6px 10px; font-size: 8px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-background"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <!-- НАВІГАЦІЯ -->
+    <nav>
+        <a href="#intro" class="nav-link active">Вступ</a>
+        <a href="#essence" class="nav-link">Сутність</a>
+        <a href="#types" class="nav-link">Види</a>
+        <a href="#management" class="nav-link">Управління</a>
+        <a href="#conclusion" class="nav-link">Висновок</a>
+    </nav>
+
+
+    <!-- 1. ВСТУП -->
+    <section id="intro">
+        <div class="content-box" data-aos="fade-up">
+            <div class="interactive-bar">
+                <span><span class="pulse-dot"></span> Публічні фінанси • Доповідь</span>
+                <span>Ігор Прайс • Група КБ-25-1</span>
+            </div>
+            <h1>Види дефіциту бюджету та <br><span class="accent-text">методи управління ним</span></h1>
+
+            <div class="card">
+                <p>
+                    Ефективне функціонування будь-якої сучасної держави неможливе без належного фінансового планування. Проте реальні видатки часто перевищують доходи.
+                </p>
+                <p style="margin-bottom: 0;">
+                    Виникнення бюджетного дефіциту вимагає глибокого аналізу його видів та застосування чітких методів управління для збереження макроекономічної стабільності.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 2. СУТНІСТЬ -->
+    <section id="essence">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Сутність бюджетного дефіциту</h2>
+
+            <div class="card" data-aos="fade-up">
+                <p>
+                    Бюджетний дефіцит — це фінансовий стан, коли витрати держави перевищують її доходи. 
+                </p>
+                <p style="margin-bottom: 0;">
+                    Контрольований дефіцит може бути джерелом інвестицій у розвиток економіки, однак неконтрольоване зростання дефіциту несе загрозу інфляції та боргової кризи.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 3. ВИДИ ДЕФІЦИТУ БЮДЖЕТУ -->
+    <section id="types">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Класифікація видів дефіциту</h2>
+
+            <div class="card" data-aos="fade-up">
+                <p>
+                    За характером прояву, тривалістю та причинами виникнення дефіцит класифікують на такі види:
+                </p>
+
+                <div class="grid-blocks">
+                    <div class="block-item">
+                        <h4>Активний (справжній)</h4>
+                        <p>Об'єктивно зумовлений спадом виробництва чи кризовими явищами в державі.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Прихований дефіцит</h4>
+                        <p>Маскується за рахунок емісійних механізмів або накопичення негласних боргів.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Поточний (тимчасовий)</h4>
+                        <p>Виникає через часовий розрив між надходженнями податків і здійсненням витрат.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Хронічний дефіцит</h4>
+                        <p>Постійний дефіцит, що повторюється роками та свідчить про системні проблеми.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Структурний дефіцит</h4>
+                        <p>Породжений загальною неефективністю державної фіскальної чи економічної політики.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Циклічний дефіцит</h4>
+                        <p>Пов'язаний з економічним циклом, коли під час спаду падають податкові збори.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 4. МЕТОДИ УПРАВЛІННЯ -->
+    <section id="management">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Методи управління дефіцитом</h2>
+
+            <div class="card" data-aos="fade-up">
+                <p>
+                    Управління бюджетним дефіцитом охоплює комплекс заходів уряду для його мінімізації та безпечного покриття:
+                </p>
+
+                <div class="grid-blocks two-cols">
+                    <div class="block-item">
+                        <h4>Державні запозичення</h4>
+                        <p>Випуск та продаж внутрішніх (ОВДП) і зовнішніх державних цінних паперів.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Секвестр видатків</h4>
+                        <p>Пропорційне або адресне зниження та скорочення видатків бюджету у разі дефіциту коштів.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Податкова оптимізація</h4>
+                        <p>Покращення адміністрування зборів, розширення бази та детінізація економіки.</p>
+                    </div>
+                    <div class="block-item">
+                        <h4>Приватизація майна</h4>
+                        <p>Залучення разових надходжень від продажу об'єктів державної власності.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 5. ВИСНОВОК -->
+    <section id="conclusion">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Висновки</h2>
+
+            <div class="card" data-aos="fade-up">
+                <p>
+                    Бюджетний дефіцит є складним, але керованим елементом публічних фінансів.
+                </p>
+                <p>
+                    Застосування ефективних методів його покриття та стримування гарантує фінансову стійкість держави і довіру суспільства.
+                </p>
+                <p style="text-align: center; margin-top: 20px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.85rem;">
+                    Дякую за увагу • Ігор Прайс (2026)
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        Державний податковий університет • Група КБ-25-1
+    </footer>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            document.querySelectorAll("section").forEach(section => {
+                if (window.pageYOffset >= section.offsetTop - 250) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            document.querySelectorAll("nav a").forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
